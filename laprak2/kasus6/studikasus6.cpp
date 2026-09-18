@@ -30,9 +30,11 @@ int main(){
     cout << left << setw(15) << "Suhu hari 3    : " << setw(25) << suhu3 << endl;
     cout << left << setw(15) << "Suhu hari 4    : " << setw(25) << suhu4 << endl;
     cout << left << setw(15) << "Suhu hari 5    : " << setw(25) << suhu5 << endl;
-    cout << fixed << setprecision(1);
     cout << left << setw(15) << "Suhu Rata-Rata  : " << setw(25) << ratarata << endl;
 
     return 0;
 
+
+
 }
+

@@ -1,0 +1,1 @@
+const int wColumn = 18;
