@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>ASC Content Hub - Instagram Content Archive & Publication Management</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <!-- Tailwind CSS with plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-fixed-dim": "#80d5cb",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#002114",
+            "error-container": "#ffdad6",
+            "primary-fixed": "#85f8c4",
+            "on-tertiary-fixed": "#001d31",
+            "primary": "#006948",
+            "secondary-container": "#99efe5",
+            "surface-container-high": "#dee8ff",
+            "on-primary": "#ffffff",
+            "inverse-surface": "#263143",
+            "background": "#f9f9ff",
+            "inverse-on-surface": "#ecf1ff",
+            "tertiary-fixed-dim": "#93ccff",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#68dba9",
+            "secondary-fixed": "#9cf2e8",
+            "surface-variant": "#d8e3fb",
+            "surface-container-low": "#f0f3ff",
+            "outline-variant": "#bccac0",
+            "on-surface": "#111c2d",
+            "tertiary-container": "#007bb9",
+            "surface": "#f9f9ff",
+            "surface-container-highest": "#d8e3fb",
+            "primary-container": "#00855d",
+            "on-primary-container": "#f5fff7",
+            "surface-container": "#e7eeff",
+            "on-surface-variant": "#3d4a42",
+            "on-primary-fixed-variant": "#005137",
+            "on-secondary-fixed": "#00201d",
+            "on-error-container": "#93000a",
+            "surface-dim": "#cfdaf2",
+            "surface-tint": "#006c4a",
+            "on-secondary-container": "#006f67",
+            "outline": "#6d7a72",
+            "on-tertiary-fixed-variant": "#004b73",
+            "on-background": "#111c2d",
+            "on-secondary-fixed-variant": "#00504a",
+            "on-tertiary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "primary-fixed-dim": "#68dba9",
+            "error": "#ba1a1a",
+            "tertiary-fixed": "#cce5ff",
+            "surface-bright": "#f9f9ff",
+            "on-tertiary-container": "#fdfcff",
+            "secondary": "#006a63",
+            "tertiary": "#006194"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "margin-mobile": "1rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "gutter": "1.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "gutter-mobile": "0.75rem"
+          },
+          "fontFamily": {
+            "sans": ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .fade-in {
+      animation: fadeIn 0.25s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .pulse-glow {
+      animation: pulseGlow 2s infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(5, 150, 105, 0); }
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex selection:bg-primary/20 selection:text-primary">
+
+  <!-- ========================================== -->
+  <!-- SIDE NAVIGATION RAIL                       -->
+  <!-- ========================================== -->
+  <aside class="fixed top-0 left-0 h-screen w-60 bg-surface-container-lowest dark:bg-surface border-r border-outline-variant/60 shadow-sm flex flex-col justify-between p-space-md z-30">
+    <div class="flex flex-col gap-5">
+      <!-- Organization Header / Brand -->
+      <div class="flex items-center gap-3 px-2 pt-1 cursor-pointer" onclick="navigateTo('dashboard')">
+        <div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold text-headline-sm shadow-sm">
+          <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">archive</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-[15px] text-on-surface tracking-tight leading-tight">ASC Content Hub</span>
+          <span class="text-[11px] font-medium text-outline">UKM ASC Media Archive</span>
+        </div>
+      </div>
+
+      <!-- Quick Action CTA Button -->
+      <button onclick="navigateTo('tambah-postingan')" class="w-full h-10 bg-primary text-on-primary rounded-lg font-semibold text-sm flex items-center justify-center gap-2 shadow-sm hover:bg-primary-container transition-all active:scale-98">
+        <span class="material-symbols-outlined text-[18px]">add_box</span>
+        <span>+ Rekap Post</span>
+      </button>
+
+      <!-- Main Navigation Menu -->
+      <nav class="flex flex-col gap-1 text-sm font-semibold">
+        <!-- 1. Dashboard -->
+        <button id="nav-dashboard" onclick="navigateTo('dashboard')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span>Dashboard</span>
+        </button>
+        <!-- 2. Semua Konten -->
+        <button id="nav-semua-konten" onclick="navigateTo('semua-konten')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all">
+          <span class="material-symbols-outlined">perm_media</span>
+          <span>Semua Konten</span>
+          <span id="nav-badge-count" class="ml-auto text-xs px-2 py-0.5 rounded-full bg-surface-container text-primary font-bold">6</span>
+        </button>
+        <!-- 3. Tambah Postingan -->
+        <button id="nav-tambah-postingan" onclick="navigateTo('tambah-postingan')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all">
+          <span class="material-symbols-outlined">add_circle</span>
+          <span>Tambah Postingan</span>
+        </button>
+        <!-- 4. Kalender -->
+        <button id="nav-kalender" onclick="navigateTo('kalender')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all">
+          <span class="material-symbols-outlined">calendar_month</span>
+          <span>Kalender</span>
+        </button>
+        <!-- 5. Import Spreadsheet -->
+        <button id="nav-import-spreadsheet" onclick="navigateTo('import-spreadsheet')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all">
+          <span class="material-symbols-outlined">upload_file</span>
+          <span>Import Spreadsheet</span>
+        </button>
+        <!-- 6. Pengaturan -->
+        <button id="nav-pengaturan" onclick="navigateTo('pengaturan')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all">
+          <span class="material-symbols-outlined">settings</span>
+          <span>Pengaturan</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="flex flex-col gap-2 pt-3 border-t border-outline-variant/40 text-xs font-semibold">
+      <button onclick="showToast('Fitur Profil Media aktif (UKM ASC UM)')" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all">
+        <span class="material-symbols-outlined text-[18px]">account_circle</span>
+        <span>Profil Media</span>
+      </button>
+      <button onclick="showToast('Dokumentasi sistem & panduan rekap Instagram ASC')" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all">
+        <span class="material-symbols-outlined text-[18px]">help</span>
+        <span>Bantuan</span>
+      </button>
+      
+      <!-- User Profile Card -->
+      <div class="mt-1 p-2.5 bg-surface-container-low rounded-lg flex items-center gap-3 border border-outline-variant/40">
+        <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-xs">
+          AS
+        </div>
+        <div class="flex flex-col overflow-hidden">
+          <span class="font-bold text-xs text-on-surface truncate">@ukmasc</span>
+          <span class="text-[10px] text-outline truncate">Tim Media &amp; Publikasi</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- MAIN WORKSPACE CONTAINER                   -->
+  <!-- ========================================== -->
+  <div class="flex-1 ml-60 flex flex-col min-w-0 min-h-screen">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="sticky top-0 z-20 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/50 shadow-sm flex items-center justify-between px-space-lg">
+      <!-- Search Input Bar -->
+      <div class="flex items-center gap-4 w-96">
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[20px]">search</span>
+          <input id="global-search-input" oninput="handleGlobalSearch(this.value)" class="w-full h-10 pl-10 pr-4 bg-surface-container-lowest border border-outline-variant/60 rounded-lg text-sm text-on-surface placeholder:text-outline/70 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-medium" placeholder="Cari arsip postingan, tagar, atau pembuat..." type="text"/>
+        </div>
+      </div>
+
+      <!-- Right Action Cluster -->
+      <div class="flex items-center gap-3">
+        <!-- Notification Dropdown Toggle -->
+        <div class="relative">
+          <button onclick="toggleNotifications()" class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" title="Notifikasi">
+            <span class="material-symbols-outlined text-[22px]">notifications</span>
+            <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full ring-2 ring-white"></span>
+          </button>
+          
+          <!-- Notifications Popup -->
+          <div id="notifications-popover" class="hidden absolute right-0 mt-2 w-80 bg-white border border-outline-variant rounded-xl shadow-lg p-3 z-50 fade-in">
+            <div class="flex items-center justify-between pb-2 border-b border-outline-variant/40 mb-2">
+              <span class="font-bold text-xs text-on-surface">Notifikasi Sistem</span>
+              <span class="text-[10px] text-primary font-semibold cursor-pointer" onclick="toggleNotifications()">Tutup</span>
+            </div>
+            <div class="flex flex-col gap-2 text-xs">
+              <div class="p-2 rounded bg-surface-container-low flex items-start gap-2">
+                <span class="material-symbols-outlined text-primary text-[16px] mt-0.5">auto_awesome</span>
+                <div>
+                  <p class="font-semibold text-on-surface">Sinkronisasi AI Siap</p>
+                  <p class="text-[11px] text-outline">Model Gemini Flash dikonfigurasi untuk ekstraksi otomatis.</p>
+                </div>
+              </div>
+              <div class="p-2 rounded bg-surface-container-low flex items-start gap-2">
+                <span class="material-symbols-outlined text-blue-600 text-[16px] mt-0.5">cloud_done</span>
+                <div>
+                  <p class="font-semibold text-on-surface">Cloud Backup Aktif</p>
+                  <p class="text-[11px] text-outline">Data arsip tersimpan aman di database organisasi.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-6 w-px bg-outline-variant/50"></div>
+
+        <!-- + Rekap Post Button -->
+        <button onclick="navigateTo('tambah-postingan')" class="h-9 px-3.5 bg-primary text-on-primary rounded-lg font-semibold text-xs flex items-center gap-1.5 shadow-sm hover:bg-primary-container transition-all">
+          <span class="material-symbols-outlined text-[16px]">add</span>
+          <span>+ Rekap Post</span>
+        </button>
+
+        <!-- Admin Profile -->
+        <div class="flex items-center gap-2 pl-1 cursor-pointer" onclick="showToast('Akun terautentikasi: Tim Media UKM ASC')">
+          <div class="w-8 h-8 rounded-full border border-primary/20 bg-primary-fixed flex items-center justify-center font-bold text-on-primary-fixed text-xs" title="Admin profile">
+            MA
+          </div>
+          <span class="material-symbols-outlined text-outline text-[18px]">keyboard_arrow_down</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT VIEWS WRAPPER -->
+    <main class="p-space-lg max-w-[1380px] mx-auto w-full flex-1 flex flex-col gap-6 pb-12">
+
+      <!-- ========================================== -->
+      <!-- VIEW 1: DASHBOARD OVERVIEW                 -->
+      <!-- ========================================== -->
+      <div id="view-dashboard" class="view-content flex flex-col gap-6 fade-in">
+        <!-- Dashboard Top Header Banner -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/60 shadow-sm">
+          <div>
+            <span class="text-xs font-bold text-primary tracking-wider uppercase">Overview Media UKM ASC</span>
+            <h1 class="text-2xl font-bold text-on-surface tracking-tight mt-0.5">Dashboard Pengarsipan Konten</h1>
+            <p class="text-sm text-outline mt-1">Rekapitulasi postingan Instagram, statistik performa media, dan arsip publikasi terpusat.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="navigateTo('tambah-postingan')" class="h-10 px-4 bg-primary text-on-primary rounded-lg font-semibold text-sm flex items-center gap-2 shadow-sm hover:bg-primary-container transition-all">
+              <span class="material-symbols-outlined text-[18px]">add_box</span>
+              <span>Rekap URL Baru</span>
+            </button>
+            <button onclick="exportToCSV()" class="h-10 px-4 bg-surface-container-lowest border border-outline-variant hover:bg-surface-container-low text-on-surface rounded-lg font-semibold text-sm flex items-center gap-2 transition-all">
+              <span class="material-symbols-outlined text-[18px]">download</span>
+              <span>Ekspor CSV</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI Metrics Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- KPI 1 -->
+          <div class="bg-surface-container-lowest border border-outline-variant/60 p-4 rounded-xl shadow-sm flex items-center justify-between">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-outline">Total Postingan</span>
+              <span id="kpi-total-posts" class="text-2xl font-bold text-on-surface mt-1">128</span>
+              <span class="text-[11px] text-emerald-600 font-bold mt-1 flex items-center gap-0.5">
+                <span class="material-symbols-outlined text-[14px]">trending_up</span> +12% dari bulan lalu
+              </span>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[24px]">collections</span>
+            </div>
+          </div>
+          <!-- KPI 2 -->
+          <div class="bg-surface-container-lowest border border-outline-variant/60 p-4 rounded-xl shadow-sm flex items-center justify-between">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-outline">Postingan Bulan Ini</span>
+              <span id="kpi-month-posts" class="text-2xl font-bold text-on-surface mt-1">18</span>
+              <span class="text-[11px] text-primary font-bold mt-1 flex items-center gap-0.5">
+                <span class="material-symbols-outlined text-[14px]">check_circle</span> Target 20 post/bulan
+              </span>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[24px]">calendar_today</span>
+            </div>
+          </div>
+          <!-- KPI 3 -->
+          <div class="bg-surface-container-lowest border border-outline-variant/60 p-4 rounded-xl shadow-sm flex items-center justify-between">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-outline">Konten Reels</span>
+              <span id="kpi-reels-count" class="text-2xl font-bold text-on-surface mt-1">34</span>
+              <span class="text-[11px] text-emerald-600 font-bold mt-1 flex items-center gap-0.5">
+                <span class="material-symbols-outlined text-[14px]">movie</span> Rasio tayang tinggi
+              </span>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[24px]">video_library</span>
+            </div>
+          </div>
+          <!-- KPI 4 -->
+          <div class="bg-surface-container-lowest border border-outline-variant/60 p-4 rounded-xl shadow-sm flex items-center justify-between">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-outline">Konten Feeds &amp; Carousel</span>
+              <span id="kpi-feeds-count" class="text-2xl font-bold text-on-surface mt-1">91</span>
+              <span class="text-[11px] text-amber-600 font-bold mt-1 flex items-center gap-0.5">
+                <span class="material-symbols-outlined text-[14px]">grid_on</span> Terarsip rapi
+              </span>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[24px]">photo_library</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart & Format Distribution Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+          <!-- Left: Publication Trend Chart (8 cols) -->
+          <div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-space-md shadow-sm flex flex-col gap-4">
+            <div class="flex items-center justify-between pb-3 border-b border-outline-variant/40">
+              <div>
+                <h3 class="font-bold text-base text-on-surface">Frekuensi Publikasi Konten (2026)</h3>
+                <p class="text-xs text-outline">Jumlah postingan terunggah per bulan di Instagram @ukmasc</p>
+              </div>
+              <span class="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full border border-primary/20">WIB (UTC+7)</span>
+            </div>
+            <!-- Interactive Visual Chart Simulation -->
+            <div class="flex items-end justify-between gap-3 h-48 pt-4 px-2">
+              <div class="flex-1 flex flex-col items-center gap-2">
+                <span class="text-[10px] font-bold text-outline">12</span>
+                <div class="w-full bg-surface-container hover:bg-primary/20 rounded-t transition-all" style="height: 40%;"></div>
+                <span class="text-xs font-medium text-outline">Mei</span>
+              </div>
+              <div class="flex-1 flex flex-col items-center gap-2">
+                <span class="text-[10px] font-bold text-outline">15</span>
+                <div class="w-full bg-surface-container hover:bg-primary/20 rounded-t transition-all" style="height: 50%;"></div>
+                <span class="text-xs font-medium text-outline">Jun</span>
+              </div>
+              <div class="flex-1 flex flex-col items-center gap-2">
+                <span class="text-[10px] font-bold text-outline">19</span>
+                <div class="w-full bg-surface-container hover:bg-primary/20 rounded-t transition-all" style="height: 65%;"></div>
+                <span class="text-xs font-medium text-outline">Jul</span>
+              </div>
+              <div class="flex-1 flex flex-col items-center gap-2">
+                <span class="text-[10px] font-bold text-outline">24</span>
+                <div class="w-full bg-surface-container hover:bg-primary/20 rounded-t transition-all" style="height: 80%;"></div>
+                <span class="text-xs font-medium text-outline">Agu</span>
+              </div>
+              <div class="flex-1 flex flex-col items-center gap-2">
+                <span class="text-[10px] font-bold text-primary">28</span>
+                <div class="w-full bg-primary rounded-t shadow-sm transition-all" style="height: 95%;"></div>
+                <span class="text-xs font-bold text-primary">Sep</span>
+              </div>
+              <div class="flex-1 flex flex-col items-center gap-2">
+                <span class="text-[10px] font-bold text-outline">Proyeksi</span>
+                <div class="w-full border-2 border-dashed border-primary/40 rounded-t" style="height: 70%;"></div>
+                <span class="text-xs font-medium text-outline">Okt</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Quick Stat Breakdown (4 cols) -->
+          <div class="lg:col-span-4 bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-space-md shadow-sm flex flex-col gap-4">
+            <div class="pb-3 border-b border-outline-variant/40">
+              <h3 class="font-bold text-base text-on-surface">Distribusi Format</h3>
+              <p class="text-xs text-outline">Persentase jenis media publikasi</p>
+            </div>
+            <div class="flex flex-col gap-3">
+              <div>
+                <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                  <span class="text-on-surface flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-primary"></span> Single / Feeds</span>
+                  <span class="text-outline">52% (67 post)</span>
+                </div>
+                <div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+                  <div class="h-full bg-primary rounded-full" style="width: 52%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                  <span class="text-on-surface flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Reels Video</span>
+                  <span class="text-outline">27% (34 post)</span>
+                </div>
+                <div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+                  <div class="h-full bg-emerald-500 rounded-full" style="width: 27%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                  <span class="text-on-surface flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Carousel Album</span>
+                  <span class="text-outline">16% (20 post)</span>
+                </div>
+                <div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+                  <div class="h-full bg-blue-500 rounded-full" style="width: 16%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                  <span class="text-on-surface flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Story &amp; Lainnya</span>
+                  <span class="text-outline">5% (7 post)</span>
+                </div>
+                <div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+                  <div class="h-full bg-amber-500 rounded-full" style="width: 5%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Posts Section Header -->
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="font-bold text-lg text-on-surface">Arsip Postingan Terbaru</h2>
+            <p class="text-xs text-outline">Daftar publikasi media sosial yang baru disinkronkan</p>
+          </div>
+          <button onclick="navigateTo('semua-konten')" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+            Lihat Semua Konten <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </button>
+        </div>
+
+        <!-- Recent Posts Table / Cards Container -->
+        <div class="bg-surface-container-lowest border border-outline-variant/60 rounded-xl overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-surface-container-low border-b border-outline-variant/60 text-[11px] font-bold uppercase text-outline tracking-wider">
+                  <th class="py-3 px-4">Konten / Judul</th>
+                  <th class="py-3 px-4">Kategori</th>
+                  <th class="py-3 px-4">Format</th>
+                  <th class="py-3 px-4">Tanggal</th>
+                  <th class="py-3 px-4">PIC / Pembuat</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="dashboard-recent-tbody" class="divide-y divide-outline-variant/40 text-xs font-medium">
+                <!-- Dynamic insertion -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- VIEW 2: TAMBAH & REKAP POSTINGAN (REVIEW)  -->
+      <!-- ========================================== -->
+      <div id="view-tambah-postingan" class="view-content hidden flex-col gap-6 fade-in">
+        <!-- Breadcrumbs & Header Section -->
+        <div class="flex flex-col gap-2">
+          <nav class="flex items-center gap-2 text-xs text-outline">
+            <a class="hover:text-primary transition-colors cursor-pointer" onclick="navigateTo('dashboard')">Konten</a>
+            <span class="material-symbols-outlined text-xs">chevron_right</span>
+            <span class="hover:text-primary transition-colors cursor-pointer" onclick="navigateTo('semua-konten')">Tambah Postingan</span>
+            <span class="material-symbols-outlined text-xs">chevron_right</span>
+            <span class="text-on-surface font-semibold">Review &amp; Rekap</span>
+          </nav>
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h1 class="text-2xl font-bold text-on-surface tracking-tight">Tambah &amp; Rekap Postingan Instagram</h1>
+              <p class="text-sm text-outline mt-0.5">Otomatisasi pengarsipan konten Instagram dengan bantuan ekstraksi AI.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container border border-outline-variant/50 text-xs text-on-surface-variant font-medium">
+                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                Sinkronisasi Cloud Aktif
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Presets Test Bar -->
+        <div class="bg-surface-container-low border border-primary/20 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <span class="font-bold text-primary flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">touch_app</span>
+            Coba Link Contoh (Klik untuk isi cepat):
+          </span>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="loadSamplePreset(0)" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-outline-variant rounded-lg font-semibold text-on-surface transition-colors flex items-center gap-1">
+              🏆 Lomba Riset 2026 (Reels)
+            </button>
+            <button onclick="loadSamplePreset(1)" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-outline-variant rounded-lg font-semibold text-on-surface transition-colors flex items-center gap-1">
+              📖 Kajian Rutin (Feeds)
+            </button>
+            <button onclick="loadSamplePreset(2)" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-outline-variant rounded-lg font-semibold text-on-surface transition-colors flex items-center gap-1">
+              📸 LKMO 2026 (Carousel)
+            </button>
+          </div>
+        </div>
+
+        <!-- TOP PROMINENT URL INPUT BANNER -->
+        <div class="bg-surface-container-lowest border border-primary/30 rounded-xl p-space-md shadow-sm transition-all hover:border-primary/50">
+          <div class="flex flex-col gap-2.5">
+            <div class="flex items-center justify-between">
+              <label class="font-semibold text-sm text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[20px]">link</span>
+                Tautan Postingan Instagram (URL)
+              </label>
+              <span class="text-xs text-outline font-medium">Ekstraksi URL Publik &amp; Post Reels</span>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+              <div class="relative flex-1 w-full">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-outline">
+                  <span class="material-symbols-outlined">photo_camera</span>
+                </div>
+                <input id="input-ig-url" class="block w-full h-11 pl-11 pr-4 bg-surface-container-low border border-outline-variant rounded-lg text-sm text-on-surface font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" placeholder="Tempel tautan Instagram di sini..." type="url" value="https://www.instagram.com/p/C1x2Y3z9abc/"/>
+              </div>
+              <button onclick="startAiExtraction()" class="w-full sm:w-auto h-11 px-5 bg-primary hover:bg-primary-container text-on-primary rounded-lg font-semibold text-sm flex items-center justify-center gap-2 shadow-sm transition-all shrink-0">
+                <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                <span>Rekap Postingan</span>
+              </button>
+            </div>
+            
+            <!-- Extraction Status Indicator -->
+            <div id="ai-status-container" class="flex items-center gap-2 pt-1 text-primary font-medium text-xs">
+              <span id="ai-status-icon" class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+              <span id="ai-status-text">Ekstraksi metadata dan transkrip Reels selesai (Dianalisis dalam 1.8 detik)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN REVIEW SECTION: 2-COLUMN SPLIT CONTAINER -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+          
+          <!-- LEFT COLUMN: 40% (5 cols) Source Data Card -->
+          <section class="lg:col-span-5 bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-space-md flex flex-col gap-4 shadow-sm">
+            <!-- Section Header -->
+            <div class="flex items-center justify-between pb-3 border-b border-outline-variant/40">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[22px]">verified</span>
+                <h2 class="font-bold text-base text-on-surface">Sumber Asli (Instagram)</h2>
+              </div>
+              <a id="preview-open-link" class="text-xs font-semibold text-primary hover:underline flex items-center gap-1" href="https://www.instagram.com/p/C1x2Y3z9abc/" rel="noopener noreferrer" target="_blank">
+                <span>Buka di Instagram</span>
+                <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+              </a>
+            </div>
+
+            <!-- Video / Thumbnail Preview Container (4:5 Aspect Ratio) -->
+            <div class="relative w-full aspect-[4/5] bg-surface-container rounded-lg overflow-hidden border border-outline-variant/40 group">
+              <img id="preview-img" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80" alt="Preview"/>
+              
+              <!-- Gradient Overlay -->
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30 pointer-events-none"></div>
+              
+              <!-- Top Format Pill on Thumbnail -->
+              <div id="preview-format-pill" class="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-medium border border-white/20">
+                <span class="material-symbols-outlined text-[14px]">movie</span>
+                <span>Reels Video</span>
+              </div>
+
+              <!-- Central Play Button Overlay -->
+              <div id="preview-play-btn" class="absolute inset-0 flex items-center justify-center">
+                <button onclick="showToast('Memutar pratinjau media...')" class="w-14 h-14 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-lg hover:bg-primary transition-transform duration-200 hover:scale-110 active:scale-95">
+                  <span class="material-symbols-outlined text-[32px] ml-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                </button>
+              </div>
+
+              <!-- Bottom Time Indicator -->
+              <div id="preview-time" class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/70 backdrop-blur-sm text-white text-xs font-mono">
+                01:24
+              </div>
+
+              <!-- Bottom Author Pill Inside Preview -->
+              <div class="absolute bottom-3 left-3 flex items-center gap-2 text-white">
+                <div class="w-6 h-6 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center ring-1 ring-white/50">
+                  ASC
+                </div>
+                <span id="preview-author" class="text-xs font-semibold drop-shadow">@ukmasc</span>
+              </div>
+            </div>
+
+            <!-- Metadata Badges Row -->
+            <div class="flex flex-wrap gap-2 pt-1">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-low border border-outline-variant/50 text-xs font-semibold text-on-surface">
+                <span class="material-symbols-outlined text-[14px] text-primary">photo_camera</span>
+                Instagram
+              </span>
+              <span id="badge-format" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#ECFDF5] border border-[#A7F3D0] text-xs font-semibold text-[#047857]">
+                <span class="material-symbols-outlined text-[14px]">video_library</span>
+                Reels
+              </span>
+              <span id="badge-date" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-low border border-outline-variant/50 text-xs font-semibold text-outline">
+                <span class="material-symbols-outlined text-[14px]">schedule</span>
+                20 Sep 2026 • 19:30 WIB
+              </span>
+            </div>
+
+            <!-- Engagement Metrics Quick Glance -->
+            <div class="grid grid-cols-3 gap-2 p-3 bg-surface-container-low rounded-lg border border-outline-variant/40">
+              <div class="flex flex-col items-center justify-center p-1">
+                <div class="flex items-center gap-1 text-on-surface-variant text-xs font-semibold">
+                  <span class="material-symbols-outlined text-rose-500 text-[18px]">favorite</span>
+                  <span id="metric-likes">1,248</span>
+                </div>
+                <span class="text-[10px] text-outline font-medium">Suka (Likes)</span>
+              </div>
+              <div class="flex flex-col items-center justify-center p-1 border-x border-outline-variant/40">
+                <div class="flex items-center gap-1 text-on-surface-variant text-xs font-semibold">
+                  <span class="material-symbols-outlined text-blue-500 text-[18px]">chat_bubble</span>
+                  <span id="metric-comments">42</span>
+                </div>
+                <span class="text-[10px] text-outline font-medium">Komentar</span>
+              </div>
+              <div class="flex flex-col items-center justify-center p-1">
+                <div class="flex items-center gap-1 text-on-surface-variant text-xs font-semibold">
+                  <span class="material-symbols-outlined text-emerald-600 text-[18px]">share</span>
+                  <span id="metric-shares">18</span>
+                </div>
+                <span class="text-[10px] text-outline font-medium">Dibagikan</span>
+              </div>
+            </div>
+
+            <!-- Original Instagram Caption Box -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-semibold text-outline">Keterangan Asli (Original Caption):</label>
+                <button class="text-xs text-primary hover:underline flex items-center gap-1 font-semibold" onclick="copyOriginalCaption()">
+                  <span class="material-symbols-outlined text-[14px]">content_copy</span>
+                  Salin Teks
+                </button>
+              </div>
+              <div id="caption-text" class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 leading-relaxed font-sans max-h-48 overflow-y-auto whitespace-pre-line select-text">
+✨ [PRESTASI MAHASISWA ASC] ✨
+
+Selamat dan sukses kepada delegasi UKM ASC yang telah meraih prestasi gemilang dalam Kompetisi Riset &amp; Inovasi Nasional 2026! 🏆🥇
+
+Kerja keras, riset mendalam, serta dedikasi tanpa henti akhirnya membuahkan Juara 1 Kategori Best Technology Implementation.
+              </div>
+            </div>
+          </section>
+
+          <!-- RIGHT COLUMN: 60% (7 cols) Draft Data Form -->
+          <section class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-space-md flex flex-col gap-5 shadow-sm">
+            <!-- Header with AI Generated Badge -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-outline-variant/40 gap-2">
+              <div>
+                <h2 class="font-bold text-base text-on-surface">Review Data Publikasi</h2>
+                <p class="text-xs text-outline mt-0.5">Periksa dan sesuaikan data yang diekstraksi otomatis sebelum disimpan ke database arsip organisasi.</p>
+              </div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-semibold self-start sm:self-auto">
+                <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                AI Generated - Siap Diedit
+              </span>
+            </div>
+
+            <!-- The Editable Form Fields -->
+            <form id="form-review-post" class="flex flex-col gap-4" onsubmit="event.preventDefault(); saveCurrentPost();">
+              <!-- Field 1: Judul Konten -->
+              <div class="flex flex-col gap-1.5">
+                <div class="flex items-center justify-between">
+                  <label class="text-xs font-bold text-on-surface">Judul Konten Arsip <span class="text-error">*</span></label>
+                  <span class="text-[11px] text-outline font-medium">Ekstraksi dari pembuka caption</span>
+                </div>
+                <input id="form-title" required class="w-full h-10 px-3 bg-surface-container-lowest border border-outline-variant rounded-lg text-sm text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-semibold" type="text" value="Pendataan Mahasiswa Berprestasi 2026"/>
+              </div>
+
+              <!-- Two-Column Sub-Grid for Category & Format -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Select 2: Kategori -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-bold text-on-surface">Kategori Konten <span class="text-error">*</span></label>
+                  <div class="relative">
+                    <select id="form-category" class="w-full h-10 pl-3 pr-10 bg-surface-container-lowest border border-outline-variant rounded-lg text-xs text-on-surface font-semibold appearance-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer">
+                      <option value="Prestasi">Prestasi</option>
+                      <option value="Event">Event &amp; Kegiatan</option>
+                      <option value="Informasi">Informasi Akademik</option>
+                      <option value="Tutorial">Edukasi / Tutorial</option>
+                      <option value="Internal">Internal UKM</option>
+                      <option value="Dakwah">Dakwah / Keislaman</option>
+                      <option value="Pendaftaran">Pendaftaran (Oprec)</option>
+                      <option value="Hari Besar Islam">Hari Besar Islam</option>
+                    </select>
+                    <span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none text-[20px]">expand_more</span>
+                  </div>
+                </div>
+                <!-- Select 3: Format Konten -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-bold text-on-surface">Format Konten <span class="text-error">*</span></label>
+                  <div class="relative">
+                    <select id="form-format" onchange="handleFormatChange(this.value)" class="w-full h-10 pl-3 pr-10 bg-surface-container-lowest border border-outline-variant rounded-lg text-xs text-on-surface font-semibold appearance-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer">
+                      <option value="Reels">Reels (Video Pendek)</option>
+                      <option value="Carousel">Carousel (Multi-slide)</option>
+                      <option value="Feeds">Single Image / Feeds</option>
+                      <option value="Story">Story Arsip</option>
+                    </select>
+                    <span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none text-[20px]">expand_more</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Field 4: Ringkasan / Summary (Otomatis) -->
+              <div class="flex flex-col gap-1.5">
+                <div class="flex items-center justify-between">
+                  <label class="text-xs font-bold text-on-surface">Ringkasan / Summary (Otomatis AI)</label>
+                  <span class="text-[11px] text-primary font-semibold flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">bolt</span> Disarikan oleh NLP
+                  </span>
+                </div>
+                <textarea id="form-summary" class="w-full p-3 bg-surface-container-lowest border border-outline-variant rounded-lg text-xs text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-y leading-relaxed font-medium" rows="3">• Rekap pencapaian delegasi lomba riset &amp; inovasi tingkat nasional 2026
+• Ajakan apresiasi dan pendataan data prestasi anggota aktif UKM ASC</textarea>
+              </div>
+
+              <!-- Two-Column Sub-Grid for PIC & Creator -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Select 5: Penanggung Jawab (PIC) -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-bold text-on-surface">Penanggung Jawab (PIC)</label>
+                  <div class="relative">
+                    <select id="form-pic" class="w-full h-10 pl-3 pr-10 bg-surface-container-lowest border border-outline-variant rounded-lg text-xs text-on-surface font-medium appearance-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer">
+                      <option value="Inaca">Inaca (Divisi Prestasi)</option>
+                      <option value="Nabila">Nabila (Divisi Humas)</option>
+                      <option value="Rian">Rian (Divisi Acara)</option>
+                      <option value="Farhan">Farhan (Sekretariat)</option>
+                    </select>
+                    <span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none text-[20px]">expand_more</span>
+                  </div>
+                </div>
+                <!-- Select 6: Pembuat / Creator -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-bold text-on-surface">Pembuat / Creator (Multimedia)</label>
+                  <div class="relative">
+                    <select id="form-creator" class="w-full h-10 pl-3 pr-10 bg-surface-container-lowest border border-outline-variant rounded-lg text-xs text-on-surface font-medium appearance-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer">
+                      <option value="Asyam">Asyam (Tim Multimedia)</option>
+                      <option value="Dewi">Dewi (Editor Video)</option>
+                      <option value="Fikri">Fikri (Graphic Designer)</option>
+                      <option value="Zahra">Zahra (Copywriter)</option>
+                    </select>
+                    <span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none text-[20px]">expand_more</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Row for Status & Tagging -->
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <!-- Select 7: Status Publikasi (5 cols) -->
+                <div class="md:col-span-5 flex flex-col gap-1.5">
+                  <label class="text-xs font-bold text-on-surface">Status Publikasi</label>
+                  <div class="relative">
+                    <select id="form-status" class="w-full h-10 pl-8 pr-10 bg-surface-container-lowest border border-outline-variant rounded-lg text-xs text-on-surface appearance-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer font-bold">
+                      <option value="Terunggah">Terunggah (Published)</option>
+                      <option value="Draf">Draf Internal</option>
+                      <option value="Terjadwal">Terjadwal</option>
+                      <option value="Diarsipkan">Diarsipkan</option>
+                    </select>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 absolute left-3 top-3.5 pointer-events-none"></span>
+                    <span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none text-[20px]">expand_more</span>
+                  </div>
+                </div>
+                <!-- Field 8: Tags / Kata Kunci (7 cols) -->
+                <div class="md:col-span-7 flex flex-col gap-1.5">
+                  <label class="text-xs font-bold text-on-surface">Tags / Kata Kunci</label>
+                  <div id="tag-container" class="min-h-10 px-2 py-1 bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-wrap items-center gap-1.5 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+                    <!-- Dynamic tag pills -->
+                    <input id="input-new-tag" onkeydown="handleTagKeyDown(event)" class="border-none bg-transparent p-1 text-xs text-on-surface placeholder:text-outline/70 focus:outline-none focus:ring-0 flex-1 min-w-[80px]" placeholder="+ Tambah tag..." type="text"/>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Additional Organization Meta Box -->
+              <div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant/40 flex items-start gap-3 mt-1 text-xs">
+                <span class="material-symbols-outlined text-outline mt-0.5 text-[20px]">info</span>
+                <p class="text-outline leading-relaxed">
+                  File aset gambar dan transkrip mentah otomatis dialokasikan ke folder storage server <code id="storage-path-display" class="px-1.5 py-0.5 bg-surface-container-lowest rounded border border-outline-variant/50 text-on-surface font-mono text-[11px]">/archive/2026/reels/prestasi-01/</code>.
+                </p>
+              </div>
+            </form>
+          </section>
+
+        </div>
+      </div>
+
+      <!-- DOCKED BOTTOM ACTION BAR (FOR REVIEW FORM) -->
+      <div id="docked-action-bar" class="fixed bottom-0 right-0 left-60 bg-surface-container-lowest/95 backdrop-blur-md border-t border-outline-variant/60 py-3.5 px-space-lg shadow-lg z-20 transition-all">
+        <div class="max-w-[1360px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-2 text-outline font-medium text-xs">
+            <span class="material-symbols-outlined text-emerald-600 text-[18px]">cloud_done</span>
+            <span id="autosave-status">Tersimpan otomatis sebagai draf lokal (WIB)</span>
+          </div>
+          <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+            <button onclick="navigateTo('semua-konten')" class="h-10 px-4 bg-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg font-semibold text-xs transition-colors" type="button">
+              Batal
+            </button>
+            <button onclick="startAiExtraction()" class="h-10 px-4 bg-surface-container-lowest border border-outline-variant hover:bg-surface-container-low text-on-surface rounded-lg font-semibold text-xs flex items-center gap-2 transition-colors" type="button">
+              <span class="material-symbols-outlined text-primary text-[18px]">auto_awesome</span>
+              <span>Ulangi Analisis AI</span>
+            </button>
+            <button onclick="saveCurrentPost()" class="h-10 px-5 bg-primary hover:bg-primary-container text-on-primary rounded-lg font-semibold text-xs flex items-center gap-2 shadow-sm transition-all" type="button">
+              <span class="material-symbols-outlined text-[18px]">save</span>
+              <span>Simpan ke Database</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- VIEW 3: SEMUA KONTEN (ARCHIVE & SEARCH)    -->
+      <!-- ========================================== -->
+      <div id="view-semua-konten" class="view-content hidden flex-col gap-6 fade-in">
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-2xl font-bold text-on-surface tracking-tight">Semua Arsip Konten</h1>
+            <p class="text-sm text-outline mt-0.5">Kelola, cari, dan filter seluruh riwayat publikasi UKM ASC.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="navigateTo('tambah-postingan')" class="h-10 px-4 bg-primary text-on-primary rounded-lg font-semibold text-sm flex items-center gap-2 shadow-sm hover:bg-primary-container transition-all">
+              <span class="material-symbols-outlined text-[18px]">add</span>
+              <span>+ Rekap Baru</span>
+            </button>
+            <button onclick="exportToCSV()" class="h-10 px-4 bg-surface-container-lowest border border-outline-variant hover:bg-surface-container-low text-on-surface rounded-lg font-semibold text-sm flex items-center gap-2 transition-all">
+              <span class="material-symbols-outlined text-[18px]">download</span>
+              <span>Ekspor CSV</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Controls Bar -->
+        <div class="bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-4 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-4">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full lg:w-auto">
+            <!-- Category Filter -->
+            <select id="filter-category" onchange="applyFilters()" class="h-10 px-3 bg-surface-container-low border border-outline-variant rounded-lg text-xs font-semibold text-on-surface">
+              <option value="ALL">Semua Kategori</option>
+              <option value="Prestasi">Prestasi</option>
+              <option value="Dakwah">Dakwah</option>
+              <option value="Event">Event &amp; Kegiatan</option>
+              <option value="Pendaftaran">Pendaftaran</option>
+              <option value="Internal">Internal</option>
+              <option value="Hari Besar Islam">Hari Besar Islam</option>
+            </select>
+            <!-- Format Filter -->
+            <select id="filter-format" onchange="applyFilters()" class="h-10 px-3 bg-surface-container-low border border-outline-variant rounded-lg text-xs font-semibold text-on-surface">
+              <option value="ALL">Semua Format</option>
+              <option value="Reels">Reels</option>
+              <option value="Feeds">Feeds</option>
+              <option value="Carousel">Carousel</option>
+              <option value="Single">Single</option>
+            </select>
+            <!-- Status Filter -->
+            <select id="filter-status" onchange="applyFilters()" class="h-10 px-3 bg-surface-container-low border border-outline-variant rounded-lg text-xs font-semibold text-on-surface">
+              <option value="ALL">Semua Status</option>
+              <option value="Terunggah">Terunggah</option>
+              <option value="Draf">Draf</option>
+              <option value="Terjadwal">Terjadwal</option>
+              <option value="Diarsipkan">Diarsipkan</option>
+            </select>
+            <!-- Reset Button -->
+            <button onclick="resetFilters()" class="h-10 px-3 bg-surface-container text-primary font-semibold rounded-lg text-xs hover:bg-surface-container-high transition-colors">
+              Reset Filter
+            </button>
+          </div>
+
+          <!-- View Mode Toggle & Counter -->
+          <div class="flex items-center justify-between w-full lg:w-auto gap-4 border-t lg:border-t-0 pt-3 lg:pt-0 border-outline-variant/40">
+            <span id="filtered-count" class="text-xs font-bold text-outline">Menampilkan 6 dari 6 postingan</span>
+            <div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg border border-outline-variant/40">
+              <button id="view-mode-grid" onclick="setViewMode('grid')" class="p-1.5 rounded text-primary bg-white shadow-sm" title="Tampilan Grid Cards">
+                <span class="material-symbols-outlined text-[18px]">grid_view</span>
+              </button>
+              <button id="view-mode-table" onclick="setViewMode('table')" class="p-1.5 rounded text-outline hover:text-on-surface" title="Tampilan Tabel">
+                <span class="material-symbols-outlined text-[18px]">view_list</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid Container -->
+        <div id="archive-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Dynamic cards -->
+        </div>
+
+        <!-- Table Container (Hidden by default) -->
+        <div id="archive-table-container" class="hidden bg-surface-container-lowest border border-outline-variant/60 rounded-xl overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-surface-container-low border-b border-outline-variant/60 text-[11px] font-bold uppercase text-outline tracking-wider">
+                  <th class="py-3 px-4">Thumb / Judul</th>
+                  <th class="py-3 px-4">Kategori</th>
+                  <th class="py-3 px-4">Format</th>
+                  <th class="py-3 px-4">Tanggal</th>
+                  <th class="py-3 px-4">PIC / Pembuat</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="archive-tbody" class="divide-y divide-outline-variant/40 text-xs font-medium">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- VIEW 4: KALENDER (CALENDAR)                -->
+      <!-- ========================================== -->
+      <div id="view-kalender" class="view-content hidden flex-col gap-6 fade-in">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-2xl font-bold text-on-surface tracking-tight">Kalender Publikasi Konten</h1>
+            <p class="text-sm text-outline mt-0.5">Jadwal tayang dan frekuensi postingan Instagram UKM ASC per bulan.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-bold text-on-surface px-3 py-1.5 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm">
+              September 2026
+            </span>
+          </div>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div class="bg-surface-container-lowest border border-outline-variant/60 rounded-xl overflow-hidden shadow-sm p-4">
+          <div class="grid grid-cols-7 gap-1 text-center font-bold text-xs text-outline pb-3 border-b border-outline-variant/40">
+            <div>Senin</div>
+            <div>Selasa</div>
+            <div>Rabu</div>
+            <div>Kamis</div>
+            <div>Jumat</div>
+            <div>Sabtu</div>
+            <div>Minggu</div>
+          </div>
+
+          <div id="calendar-days-grid" class="grid grid-cols-7 gap-2 pt-3 min-h-[420px]">
+            <!-- Dynamic calendar boxes generated via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- VIEW 5: IMPORT SPREADSHEET                 -->
+      <!-- ========================================== -->
+      <div id="view-import-spreadsheet" class="view-content hidden flex-col gap-6 fade-in">
+        <div>
+          <h1 class="text-2xl font-bold text-on-surface tracking-tight">Import Data Spreadsheet Existing</h1>
+          <p class="text-sm text-outline mt-0.5">Migrasikan data rekap lama dari format XLSX / CSV ke database arsip ASC Content Hub.</p>
+        </div>
+
+        <!-- Drag & Drop Upload Zone -->
+        <div class="border-2 border-dashed border-primary/40 hover:border-primary bg-primary/5 rounded-2xl p-8 text-center flex flex-col items-center justify-center gap-3 transition-all cursor-pointer" onclick="triggerImportDemo()">
+          <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-[36px]">upload_file</span>
+          </div>
+          <div>
+            <p class="text-base font-bold text-on-surface">Tarik &amp; Lepaskan File Spreadsheet di Sini</p>
+            <p class="text-xs text-outline mt-1">Mendukung file .XLSX, .XLS, atau .CSV (Maksimal 10MB)</p>
+          </div>
+          <button class="mt-2 h-10 px-5 bg-primary text-on-primary rounded-lg font-semibold text-xs shadow-sm hover:bg-primary-container transition-all">
+            Pilih File Dari Komputer
+          </button>
+        </div>
+
+        <!-- Column Mapping Preview Section -->
+        <div class="bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-space-md shadow-sm flex flex-col gap-4">
+          <div class="pb-3 border-b border-outline-variant/40 flex items-center justify-between">
+            <h3 class="font-bold text-base text-on-surface">Koleksi Pemetaan Kolom (Column Mapping)</h3>
+            <span class="text-xs text-emerald-600 font-bold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">Terdeteksi Otomatis</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-semibold">
+            <div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant/40 flex flex-col gap-1">
+              <span class="text-outline text-[11px]">Spreadsheet Column:</span>
+              <span class="text-on-surface font-bold">Judul Konten</span>
+              <span class="text-primary text-[11px] mt-1 font-mono">➔ title</span>
+            </div>
+            <div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant/40 flex flex-col gap-1">
+              <span class="text-outline text-[11px]">Spreadsheet Column:</span>
+              <span class="text-on-surface font-bold">Copywriting</span>
+              <span class="text-primary text-[11px] mt-1 font-mono">➔ caption</span>
+            </div>
+            <div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant/40 flex flex-col gap-1">
+              <span class="text-outline text-[11px]">Spreadsheet Column:</span>
+              <span class="text-on-surface font-bold">Format</span>
+              <span class="text-primary text-[11px] mt-1 font-mono">➔ format_id</span>
+            </div>
+            <div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant/40 flex flex-col gap-1">
+              <span class="text-outline text-[11px]">Spreadsheet Column:</span>
+              <span class="text-on-surface font-bold">Link Unggah</span>
+              <span class="text-primary text-[11px] mt-1 font-mono">➔ url</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- VIEW 6: PENGATURAN                         -->
+      <!-- ========================================== -->
+      <div id="view-pengaturan" class="view-content hidden flex-col gap-6 fade-in">
+        <div>
+          <h1 class="text-2xl font-bold text-on-surface tracking-tight">Pengaturan &amp; Integrasi</h1>
+          <p class="text-sm text-outline mt-0.5">Konfigurasi taksonomi organisasi, akun Meta API, dan manajemen database.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Card 1: Integrasi Instagram -->
+          <div class="bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-space-md shadow-sm flex flex-col gap-4">
+            <div class="pb-3 border-b border-outline-variant/40 flex items-center justify-between">
+              <h3 class="font-bold text-base text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">key</span> Status API &amp; Koneksi Instagram
+              </h3>
+              <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">Terhubung</span>
+            </div>
+            <p class="text-xs text-outline leading-relaxed">
+              Akun resmi Instagram <strong class="text-on-surface">@ukmasc</strong> terauthentikasi via Meta Graph API v26.0 (Long-lived Token).
+            </p>
+            <div class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg border border-outline-variant/40 text-xs">
+              <span class="font-bold text-on-surface">Access Token Expiry:</span>
+              <span class="font-mono text-outline">58 Hari lagi (Auto-refresh)</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Manajemen Data & Reset -->
+          <div class="bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-space-md shadow-sm flex flex-col gap-4">
+            <div class="pb-3 border-b border-outline-variant/40">
+              <h3 class="font-bold text-base text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">database</span> Ekspor &amp; Pemeliharaan Data
+              </h3>
+            </div>
+            <div class="flex flex-col gap-3">
+              <button onclick="exportToCSV()" class="h-10 px-4 bg-primary text-on-primary font-semibold text-xs rounded-lg flex items-center justify-center gap-2 shadow-sm">
+                <span class="material-symbols-outlined text-[18px]">download</span>
+                Ekspor Seluruh Database ke CSV
+              </button>
+              <button onclick="resetDemoData()" class="h-10 px-4 bg-surface-container hover:bg-error-container text-on-surface hover:text-on-error-container font-semibold text-xs rounded-lg transition-colors flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">refresh</span>
+                Reset Data Demo ke Default
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- POST DETAIL INSPECTION MODAL               -->
+  <!-- ========================================== -->
+  <div id="post-detail-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 fade-in">
+    <div class="bg-white border border-outline-variant rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl flex flex-col gap-4 relative">
+      <button onclick="closeDetailModal()" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-surface-container text-outline hover:text-on-surface transition-colors">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+
+      <div class="flex items-center gap-2">
+        <span id="modal-category-badge" class="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-bold text-xs">Category</span>
+        <span id="modal-format-badge" class="px-2.5 py-0.5 rounded-full bg-surface-container text-outline font-bold text-xs">Format</span>
+      </div>
+
+      <h2 id="modal-title" class="text-xl font-bold text-on-surface">Title</h2>
+
+      <div class="w-full aspect-[16/9] bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+        <img id="modal-img" class="w-full h-full object-cover" src="" alt="Post image"/>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs bg-surface-container-low p-3 rounded-lg border border-outline-variant/40">
+        <div>
+          <span class="text-outline block text-[11px]">Tanggal:</span>
+          <span id="modal-date" class="font-bold text-on-surface">Date</span>
+        </div>
+        <div>
+          <span class="text-outline block text-[11px]">PIC:</span>
+          <span id="modal-pic" class="font-bold text-on-surface">PIC</span>
+        </div>
+        <div>
+          <span class="text-outline block text-[11px]">Pembuat:</span>
+          <span id="modal-creator" class="font-bold text-on-surface">Creator</span>
+        </div>
+        <div>
+          <span class="text-outline block text-[11px]">Status:</span>
+          <span id="modal-status" class="font-bold text-emerald-600">Status</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-outline">Keterangan / Caption:</span>
+        <div id="modal-caption" class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-sans whitespace-pre-line max-h-40 overflow-y-auto">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-outline-variant/40">
+        <a id="modal-ig-link" href="#" target="_blank" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+          Buka Postingan di Instagram <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+        </a>
+        <div class="flex items-center gap-2">
+          <button id="modal-edit-btn" class="h-9 px-4 bg-primary text-white rounded-lg font-semibold text-xs shadow-sm hover:bg-primary-container transition-all">
+            Edit Postingan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION FLOATER -->
+  <div id="toast-notification" class="fixed bottom-6 right-6 z-50 hidden items-center gap-3 bg-inverse-surface text-inverse-on-surface px-4 py-3 rounded-xl shadow-xl fade-in text-xs font-semibold">
+    <span id="toast-icon" class="material-symbols-outlined text-emerald-400 text-[20px]">check_circle</span>
+    <span id="toast-message">Pesan notifikasi</span>
+  </div>
+
+  <!-- MAIN SCRIPT -->
+  <script>
+    // Initial Seed Dataset
+    const DEFAULT_POSTS = [
+      {
+        id: 'post-1',
+        title: 'Pendataan Mahasiswa Berprestasi 2026',
+        url: 'https://www.instagram.com/p/C1x2Y3z9abc/',
+        category: 'Prestasi',
+        format: 'Reels',
+        date: '2026-09-20',
+        time: '19:30',
+        pic: 'Inaca',
+        creator: 'Asyam',
+        status: 'Terunggah',
+        likes: '1,248',
+        comments: '42',
+        shares: '18',
+        tags: ['#prestasi', '#reels', '#kemahasiswaan', '#UKMASC'],
+        imgUrl: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80',
+        caption: `✨ [PRESTASI MAHASISWA ASC] ✨\n\nSelamat dan sukses kepada delegasi UKM ASC yang telah meraih prestasi gemilang dalam Kompetisi Riset & Inovasi Nasional 2026! 🏆🥇\n\nKerja keras, riset mendalam, serta dedikasi tanpa henti akhirnya membuahkan Juara 1 Kategori Best Technology Implementation.`,
+        summary: `• Rekap pencapaian delegasi lomba riset & inovasi tingkat nasional 2026\n• Ajakan apresiasi dan pendataan data prestasi anggota aktif UKM ASC`
+      },
+      {
+        id: 'post-2',
+        title: 'Kajian Rutin Selasa: Generasi Qur\'ani di Era Digital',
+        url: 'https://www.instagram.com/p/C2k9M8x4def/',
+        category: 'Dakwah',
+        format: 'Feeds',
+        date: '2026-09-18',
+        time: '16:00',
+        pic: 'Nabila',
+        creator: 'Fikri',
+        status: 'Terunggah',
+        likes: '856',
+        comments: '29',
+        shares: '45',
+        tags: ['#kajian', '#dakwah', '#islamic', '#UKMASC'],
+        imgUrl: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=800&q=80',
+        caption: `📖 [KAJIAN RUTIN ASC] 📖\n\nHadirilah Kajian Rutin Selasa sore bersama Ustadz Ahmad Hidayat, M.A.\nTema: "Menjadi Generasi Qur'ani yang Adaptif dan Berdaya Saing di Era Digital"\n\n📍 Masjid Al-Hikmah UM\n⏰ Selasa, 18 September 2026 | 16.00 WIB`,
+        summary: `• Undangan kajian rutin Selasa sore tema Generasi Qur'ani era digital\n• Narasumber Ustadz Ahmad Hidayat, M.A di Masjid Al-Hikmah UM`
+      },
+      {
+        id: 'post-3',
+        title: 'Dokumentasi Latihan Keterampilan Manajemen Organisasi (LKMO) 2026',
+        url: 'https://www.instagram.com/p/C3m1P2q9ghi/',
+        category: 'Event',
+        format: 'Carousel',
+        date: '2026-09-15',
+        time: '13:15',
+        pic: 'Rian',
+        creator: 'Dewi',
+        status: 'Terunggah',
+        likes: '1,420',
+        comments: '68',
+        shares: '31',
+        tags: ['#LKMO2026', '#kaderisasi', '#internal', '#UKMASC'],
+        imgUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80',
+        caption: `📸 [DOKUMENTASI LKMO 2026] 📸\n\nKeseruan dan kekeluargaan menyelimuti agenda Latihan Keterampilan Manajemen Organisasi UKM ASC 2026!\n\nSelama 2 hari 1 malam, para calon pengurus dibekali ilmu kepemimpinan, manajemen konflik, dan penyusunan proker unggulan.`,
+        summary: `• Dokumentasi kegiatan LKMO 2026 pembekalan kepemimpinan dan proker pengurus\n• Dilaksanakan 2 hari 1 malam dengan antusiasme tinggi`
+      },
+      {
+        id: 'post-4',
+        title: 'Pembukaan Pendaftaran Anggota Baru (Open Recruitment ASC 2026)',
+        url: 'https://www.instagram.com/p/C4n5T7u1jkl/',
+        category: 'Pendaftaran',
+        format: 'Feeds',
+        date: '2026-09-10',
+        time: '09:00',
+        pic: 'Farhan',
+        creator: 'Zahra',
+        status: 'Terunggah',
+        likes: '2,150',
+        comments: '112',
+        shares: '230',
+        tags: ['#OprecASC', '#mahasiswabaru', '#UM2026', '#pendaftaran'],
+        imgUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80',
+        caption: `🚀 [OPEN RECRUITMENT UKM ASC 2026] 🚀\n\nPanggilan untuk seluruh Mahasiswa Baru Universitas Negeri Malang!\nIngin mengasah kemampuan Al-Qur'an, kepemimpinan, dan jejaring berprestasi? Mari bergabung menjadi bagian dari keluarga besar UKM Al-Qur'an Study Club!`,
+        summary: `• Pengumuman pendaftaran anggota baru (Oprec) UKM ASC 2026 bagi MABA UM\n• Informasi persyaratan, alur pendaftaran, dan benefit bergabung`
+      },
+      {
+        id: 'post-5',
+        title: 'Spesial Teaser Milad XIII UKM Al-Qur\'an Study Club',
+        url: 'https://www.instagram.com/reel/C5o8W3x2mno/',
+        category: 'Internal',
+        format: 'Reels',
+        date: '2026-09-05',
+        time: '20:00',
+        pic: 'Inaca',
+        creator: 'Asyam',
+        status: 'Terunggah',
+        likes: '3,100',
+        comments: '184',
+        shares: '410',
+        tags: ['#Milad13ASC', '#milad', '#sejarahASC', '#reels'],
+        imgUrl: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80',
+        caption: `🎉 [TEASER MILAD XIII UKM ASC] 🎉\n\n13 Tahun Mengabdi, Menginspirasi, dan Mencetak Generasi Qur'ani Berprestasi.\n\nSaksikan terus perjalanan panjang UKM ASC dalam rangkaian perayaan Milad XIII pekan depan!`,
+        summary: `• Video singkat kenangan perjalanan 13 tahun perjalanan UKM ASC\n• Undangan menyambut puncak perayaan Milad XIII UKM ASC`
+      },
+      {
+        id: 'post-6',
+        title: 'Poster Ucapan Selamat Hari Raya Idul Adha 1447 H',
+        url: 'https://www.instagram.com/p/C6p2Q1y3pqr/',
+        category: 'Hari Besar Islam',
+        format: 'Single',
+        date: '2026-08-28',
+        time: '07:00',
+        pic: 'Nabila',
+        creator: 'Fikri',
+        status: 'Diarsipkan',
+        likes: '940',
+        comments: '15',
+        shares: '22',
+        tags: ['#IdulAdha', '#haribesar', '#ucapan', '#UKMASC'],
+        imgUrl: 'https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&q=80',
+        caption: `🐑 [SELAMAT HARI RAYA IDUL ADHA 1447 H] 🐑\n\nKeluarga Besar UKM Al-Qur'an Study Club Universitas Negeri Malang mengucapkan Selamat Hari Raya Idul Adha 1447 H.\n\nSemoga semangat pengorbanan Nabi Ibrahim AS dan Keikhlasan Nabi Ismail AS senantiasa menginspirasi kita.`,
+        summary: `• Ucapan Idul Adha 1447 H dari Pengurus UKM ASC UM\n• Pesan keteladanan pengorbanan dan keikhlasan`
+      }
+    ];
+
+    // State Variables
+    let posts = [];
+    let currentTags = ['#prestasi', '#reels', '#kemahasiswaan'];
+    let currentView = 'dashboard';
+    let viewMode = 'grid'; // 'grid' | 'table'
+    let currentEditingPostId = null;
+
+    // Local Storage Helpers
+    function loadState() {
+      const stored = localStorage.getItem('asc_posts_db');
+      if (stored) {
+        try {
+          posts = JSON.parse(stored);
+        } catch(e) {
+          posts = [...DEFAULT_POSTS];
+        }
+      } else {
+        posts = [...DEFAULT_POSTS];
+        saveState();
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem('asc_posts_db', JSON.stringify(posts));
+      updateBadgeCounts();
+    }
+
+    // View Navigation Router
+    function navigateTo(viewId) {
+      currentView = viewId;
+
+      // Toggle views
+      document.querySelectorAll('.view-content').forEach(el => el.classList.add('hidden'));
+      const targetView = document.getElementById(`view-${viewId}`);
+      if (targetView) targetView.classList.remove('hidden');
+
+      // Toggle nav buttons active style
+      document.querySelectorAll('.nav-item').forEach(el => {
+        el.classList.remove('bg-surface-container', 'text-primary', 'font-bold');
+        el.classList.add('text-on-surface-variant');
+      });
+
+      const activeNavBtn = document.getElementById(`nav-${viewId}`);
+      if (activeNavBtn) {
+        activeNavBtn.classList.add('bg-surface-container', 'text-primary', 'font-bold');
+        activeNavBtn.classList.remove('text-on-surface-variant');
+      }
+
+      // Show/Hide bottom docked action bar only for review form view
+      const actionBar = document.getElementById('docked-action-bar');
+      if (viewId === 'tambah-postingan') {
+        actionBar.classList.remove('hidden');
+      } else {
+        actionBar.classList.add('hidden');
+      }
+
+      // Render view-specific data
+      if (viewId === 'dashboard') renderDashboard();
+      if (viewId === 'semua-konten') renderArchive();
+      if (viewId === 'kalender') renderCalendar();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Render Dashboard
+    function renderDashboard() {
+      // Update KPIs
+      document.getElementById('kpi-total-posts').innerText = posts.length;
+      document.getElementById('kpi-reels-count').innerText = posts.filter(p => p.format === 'Reels').length;
+      document.getElementById('kpi-feeds-count').innerText = posts.filter(p => p.format === 'Feeds' || p.format === 'Carousel' || p.format === 'Single').length;
+
+      // Render recent posts table (top 5)
+      const tbody = document.getElementById('dashboard-recent-tbody');
+      tbody.innerHTML = '';
+
+      posts.slice(0, 5).forEach(post => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-surface-container-low transition-colors';
+        tr.innerHTML = `
+          <td class="py-3 px-4 flex items-center gap-3">
+            <img src="${post.imgUrl}" class="w-10 h-10 rounded-lg object-cover border border-outline-variant/40 shrink-0"/>
+            <div class="flex flex-col overflow-hidden">
+              <span class="font-bold text-on-surface truncate max-w-xs">${post.title}</span>
+              <span class="text-[11px] text-outline truncate">${post.url}</span>
+            </div>
+          </td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full bg-surface-container text-primary font-bold text-[11px]">${post.category}</span></td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-bold text-[11px]">${post.format}</span></td>
+          <td class="py-3 px-4 text-outline font-mono text-[11px]">${post.date}</td>
+          <td class="py-3 px-4 text-on-surface"><span class="font-bold">${post.pic}</span> / ${post.creator}</td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[11px]">${post.status}</span></td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="openPostModal('${post.id}')" class="text-primary font-bold hover:underline">Lihat</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Render Archive
+    function renderArchive() {
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const cat = document.getElementById('filter-category').value;
+      const fmt = document.getElementById('filter-format').value;
+      const sts = document.getElementById('filter-status').value;
+      const search = document.getElementById('global-search-input').value.toLowerCase();
+
+      let filtered = posts.filter(p => {
+        const matchCat = (cat === 'ALL' || p.category === cat);
+        const matchFmt = (fmt === 'ALL' || p.format === fmt);
+        const matchSts = (sts === 'ALL' || p.status === sts);
+        const matchSearch = (!search || p.title.toLowerCase().includes(search) || p.caption.toLowerCase().includes(search) || p.creator.toLowerCase().includes(search));
+        return matchCat && matchFmt && matchSts && matchSearch;
+      });
+
+      document.getElementById('filtered-count').innerText = `Menampilkan ${filtered.length} dari ${posts.length} postingan`;
+
+      if (viewMode === 'grid') {
+        renderGrid(filtered);
+      } else {
+        renderTable(filtered);
+      }
+    }
+
+    function renderGrid(items) {
+      const container = document.getElementById('archive-grid-container');
+      container.innerHTML = '';
+
+      if (items.length === 0) {
+        container.innerHTML = `<div class="col-span-full p-8 text-center text-outline">Tidak ada postingan yang sesuai filter.</div>`;
+        return;
+      }
+
+      items.forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'bg-surface-container-lowest border border-outline-variant/60 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group';
+        card.innerHTML = `
+          <div class="relative w-full aspect-[4/3] bg-surface-container overflow-hidden">
+            <img src="${post.imgUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
+            <span class="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] font-bold">
+              ${post.format}
+            </span>
+            <span class="absolute top-2 right-2 px-2.5 py-0.5 rounded-full bg-primary text-white text-[11px] font-bold">
+              ${post.category}
+            </span>
+          </div>
+          <div class="p-4 flex-1 flex flex-col justify-between gap-3">
+            <div>
+              <span class="text-[11px] text-outline font-semibold">${post.date} • PIC: ${post.pic}</span>
+              <h3 class="font-bold text-sm text-on-surface line-clamp-2 mt-1 leading-snug">${post.title}</h3>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-outline-variant/40 text-xs">
+              <span class="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">${post.status}</span>
+              <div class="flex items-center gap-2">
+                <button onclick="openPostModal('${post.id}')" class="px-2.5 py-1 bg-surface-container hover:bg-primary/10 text-primary font-bold rounded transition-colors">
+                  Detail
+                </button>
+                <button onclick="deletePost('${post.id}')" class="p-1 text-outline hover:text-error transition-colors" title="Hapus">
+                  <span class="material-symbols-outlined text-[18px]">delete</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderTable(items) {
+      const tbody = document.getElementById('archive-tbody');
+      tbody.innerHTML = '';
+
+      items.forEach(post => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-surface-container-low transition-colors';
+        tr.innerHTML = `
+          <td class="py-3 px-4 flex items-center gap-3">
+            <img src="${post.imgUrl}" class="w-10 h-10 rounded-lg object-cover border border-outline-variant/40 shrink-0"/>
+            <div class="flex flex-col overflow-hidden">
+              <span class="font-bold text-on-surface truncate max-w-xs">${post.title}</span>
+              <span class="text-[11px] text-outline truncate">${post.url}</span>
+            </div>
+          </td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full bg-surface-container text-primary font-bold text-[11px]">${post.category}</span></td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-bold text-[11px]">${post.format}</span></td>
+          <td class="py-3 px-4 text-outline font-mono text-[11px]">${post.date}</td>
+          <td class="py-3 px-4 text-on-surface"><span class="font-bold">${post.pic}</span> / ${post.creator}</td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[11px]">${post.status}</span></td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="openPostModal('${post.id}')" class="text-primary font-bold hover:underline mr-2">Detail</button>
+            <button onclick="deletePost('${post.id}')" class="text-error font-bold hover:underline">Hapus</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function setViewMode(mode) {
+      viewMode = mode;
+      const grid = document.getElementById('archive-grid-container');
+      const table = document.getElementById('archive-table-container');
+      const btnGrid = document.getElementById('view-mode-grid');
+      const btnTable = document.getElementById('view-mode-table');
+
+      if (mode === 'grid') {
+        grid.classList.remove('hidden');
+        table.classList.add('hidden');
+        btnGrid.className = 'p-1.5 rounded text-primary bg-white shadow-sm';
+        btnTable.className = 'p-1.5 rounded text-outline hover:text-on-surface';
+      } else {
+        grid.classList.add('hidden');
+        table.classList.remove('hidden');
+        btnTable.className = 'p-1.5 rounded text-primary bg-white shadow-sm';
+        btnGrid.className = 'p-1.5 rounded text-outline hover:text-on-surface';
+      }
+      applyFilters();
+    }
+
+    function resetFilters() {
+      document.getElementById('filter-category').value = 'ALL';
+      document.getElementById('filter-format').value = 'ALL';
+      document.getElementById('filter-status').value = 'ALL';
+      document.getElementById('global-search-input').value = '';
+      applyFilters();
+    }
+
+    // Render Calendar View
+    function renderCalendar() {
+      const container = document.getElementById('calendar-days-grid');
+      container.innerHTML = '';
+
+      // Days of September 2026 (Starts on Tuesday)
+      // 1-30 days
+      const daysInMonth = 30;
+      const firstDayOffset = 1; // 1 = Tuesday (0-indexed: Mon=0, Tue=1)
+
+      // Blank slots
+      for (let i = 0; i < firstDayOffset; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'bg-surface-container-low/40 rounded-lg p-2 min-h-[70px]';
+        container.appendChild(empty);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `2026-09-${day < 10 ? '0' + day : day}`;
+        const dayPosts = posts.filter(p => p.date === dateStr);
+
+        const box = document.createElement('div');
+        box.className = `border ${dayPosts.length > 0 ? 'border-primary/40 bg-surface-container-lowest shadow-sm' : 'border-outline-variant/30 bg-white'} rounded-lg p-2 min-h-[75px] flex flex-col justify-between`;
+        
+        let postsHtml = dayPosts.map(p => `
+          <div onclick="openPostModal('${p.id}')" class="p-1 rounded bg-primary/10 text-primary text-[10px] font-bold truncate cursor-pointer hover:bg-primary/20 flex items-center gap-1" title="${p.title}">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+            <span class="truncate">${p.title}</span>
+          </div>
+        `).join('');
+
+        box.innerHTML = `
+          <span class="text-xs font-bold ${dayPosts.length > 0 ? 'text-primary' : 'text-outline'}">${day}</span>
+          <div class="flex flex-col gap-1 mt-1">${postsHtml}</div>
+        `;
+        container.appendChild(box);
+      }
+    }
+
+    // AI Rekap Processing Simulation
+    function startAiExtraction() {
+      const url = document.getElementById('input-ig-url').value;
+      if (!url) {
+        showToast('Masukkan URL Instagram terlebih dahulu!');
+        return;
+      }
+
+      const statusIcon = document.getElementById('ai-status-icon');
+      const statusText = document.getElementById('ai-status-text');
+
+      statusIcon.innerText = 'sync';
+      statusIcon.classList.add('animate-spin');
+      statusText.innerText = 'Validasi URL & mengambil metadata Instagram...';
+
+      setTimeout(() => {
+        statusText.innerText = 'Mengabaikan watermark & menganalisis caption dengan AI...';
+      }, 1000);
+
+      setTimeout(() => {
+        statusIcon.innerText = 'check_circle';
+        statusIcon.classList.remove('animate-spin');
+        statusText.innerText = 'Ekstraksi metadata dan transkrip Reels selesai (Dianalisis dalam 1.8 detik)';
+        showToast('Ekstraksi AI selesai! Data draft diperbarui.');
+      }, 2000);
+    }
+
+    // Load Preset Samples
+    function loadSamplePreset(index) {
+      const presets = DEFAULT_POSTS;
+      if (!presets[index]) return;
+      const item = presets[index];
+
+      document.getElementById('input-ig-url').value = item.url;
+      document.getElementById('preview-img').src = item.imgUrl;
+      document.getElementById('preview-open-link').href = item.url;
+      document.getElementById('badge-format').innerHTML = `<span class="material-symbols-outlined text-[14px]">video_library</span> ${item.format}`;
+      document.getElementById('badge-date').innerHTML = `<span class="material-symbols-outlined text-[14px]">schedule</span> ${item.date} • ${item.time} WIB`;
+      document.getElementById('metric-likes').innerText = item.likes;
+      document.getElementById('metric-comments').innerText = item.comments;
+      document.getElementById('metric-shares').innerText = item.shares;
+      document.getElementById('caption-text').innerText = item.caption;
+
+      document.getElementById('form-title').value = item.title;
+      document.getElementById('form-category').value = item.category;
+      document.getElementById('form-format').value = item.format;
+      document.getElementById('form-summary').value = item.summary;
+      document.getElementById('form-pic').value = item.pic;
+      document.getElementById('form-creator').value = item.creator;
+      document.getElementById('form-status').value = item.status;
+
+      currentTags = [...item.tags];
+      renderTags();
+      startAiExtraction();
+    }
+
+    // Tag Input System
+    function renderTags() {
+      const container = document.getElementById('tag-container');
+      const input = document.getElementById('input-new-tag');
+      
+      // Remove all existing tag pills
+      container.querySelectorAll('.tag-pill').forEach(el => el.remove());
+
+      currentTags.forEach(tag => {
+        const pill = document.createElement('span');
+        pill.className = 'tag-pill inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container text-primary font-bold text-xs';
+        pill.innerHTML = `
+          ${tag}
+          <button type="button" onclick="removeTag('${tag}')" class="hover:text-error transition-colors font-bold text-sm">×</button>
+        `;
+        container.insertBefore(pill, input);
+      });
+    }
+
+    function handleTagKeyDown(e) {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        let val = e.target.value.trim();
+        if (!val) return;
+        if (!val.startsWith('#')) val = '#' + val;
+        if (!currentTags.includes(val)) {
+          currentTags.push(val);
+          renderTags();
+        }
+        e.target.value = '';
+      }
+    }
+
+    function removeTag(tagStr) {
+      currentTags = currentTags.filter(t => t !== tagStr);
+      renderTags();
+    }
+
+    // Save Current Post
+    function saveCurrentPost() {
+      const title = document.getElementById('form-title').value;
+      const url = document.getElementById('input-ig-url').value;
+      const category = document.getElementById('form-category').value;
+      const format = document.getElementById('form-format').value;
+      const summary = document.getElementById('form-summary').value;
+      const pic = document.getElementById('form-pic').value;
+      const creator = document.getElementById('form-creator').value;
+      const status = document.getElementById('form-status').value;
+      const imgUrl = document.getElementById('preview-img').src;
+      const caption = document.getElementById('caption-text').innerText;
+
+      if (!title) {
+        showToast('Judul konten wajib diisi!');
+        return;
+      }
+
+      const newPost = {
+        id: 'post-' + Date.now(),
+        title,
+        url,
+        category,
+        format,
+        date: new Date().toISOString().split('T')[0],
+        time: '14:30',
+        pic,
+        creator,
+        status,
+        likes: '1,250',
+        comments: '45',
+        shares: '20',
+        tags: [...currentTags],
+        imgUrl,
+        caption,
+        summary
+      };
+
+      posts.unshift(newPost);
+      saveState();
+      showToast('Postingan berhasil disimpan ke database arsip!');
+      navigateTo('semua-konten');
+    }
+
+    function deletePost(id) {
+      if (confirm('Apakah Anda yakin ingin menghapus postingan ini dari arsip?')) {
+        posts = posts.filter(p => p.id !== id);
+        saveState();
+        applyFilters();
+        showToast('Postingan berhasil dihapus dari database.');
+      }
+    }
+
+    // Detail Modal
+    function openPostModal(id) {
+      const post = posts.find(p => p.id === id);
+      if (!post) return;
+
+      document.getElementById('modal-title').innerText = post.title;
+      document.getElementById('modal-category-badge').innerText = post.category;
+      document.getElementById('modal-format-badge').innerText = post.format;
+      document.getElementById('modal-img').src = post.imgUrl;
+      document.getElementById('modal-date').innerText = post.date;
+      document.getElementById('modal-pic').innerText = post.pic;
+      document.getElementById('modal-creator').innerText = post.creator;
+      document.getElementById('modal-status').innerText = post.status;
+      document.getElementById('modal-caption').innerText = post.caption;
+      document.getElementById('modal-ig-link').href = post.url;
+
+      document.getElementById('post-detail-modal').classList.remove('hidden');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('post-detail-modal').classList.add('hidden');
+    }
+
+    // Exporter
+    function exportToCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "ID,Judul Konten,URL,Kategori,Format,Tanggal,PIC,Pembuat,Status\n";
+
+      posts.forEach(p => {
+        const row = [
+          p.id,
+          `"${p.title.replace(/"/g, '""')}"`,
+          `"${p.url}"`,
+          `"${p.category}"`,
+          `"${p.format}"`,
+          `"${p.date}"`,
+          `"${p.pic}"`,
+          `"${p.creator}"`,
+          `"${p.status}"`
+        ].join(",");
+        csvContent += row + "\n";
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `ASC_Content_Hub_Export_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showToast('File CSV berhasil dibuat dan diunduh!');
+    }
+
+    function triggerImportDemo() {
+      showToast('Simulasi pengunggahan spreadsheet berhasil! 3 data diimpor.');
+    }
+
+    function resetDemoData() {
+      posts = [...DEFAULT_POSTS];
+      saveState();
+      showToast('Data demo berhasil direset ke kondisi awal.');
+      navigateTo('dashboard');
+    }
+
+    function copyOriginalCaption() {
+      const text = document.getElementById('caption-text').innerText;
+      navigator.clipboard.writeText(text);
+      showToast('Keterangan caption disalin ke clipboard!');
+    }
+
+    function handleGlobalSearch(val) {
+      if (currentView !== 'semua-konten' && val) {
+        navigateTo('semua-konten');
+      }
+      applyFilters();
+    }
+
+    function updateBadgeCounts() {
+      const badge = document.getElementById('nav-badge-count');
+      if (badge) badge.innerText = posts.length;
+    }
+
+    function toggleNotifications() {
+      const popover = document.getElementById('notifications-popover');
+      popover.classList.toggle('hidden');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').innerText = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+
+      setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3000);
+    }
+
+    // Auto update autosave timestamp
+    function updateAutoSaveTime() {
+      const now = new Date();
+      const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} WIB`;
+      const el = document.getElementById('autosave-status');
+      if (el) el.innerText = `Tersimpan otomatis sebagai draf lokal (${timeStr})`;
+    }
+
+    // Initialize App
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      renderTags();
+      navigateTo('dashboard');
+      updateAutoSaveTime();
+      setInterval(updateAutoSaveTime, 60000);
+    });
+  </script>
+</body>
+</html>
